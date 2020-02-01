@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  
+    xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:p="http://www.springframework.org/schema/p" 
+    xmlns:tx="http://www.springframework.org/schema/tx"   
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+   > 
+
+<bean id = "display" class = "student.Students">
+<property name ="name" value ="varad" />
+</bean>  
+
+<bean id = "employee" class = "com.employee.Employee">
+<constructor-arg value = "10" type = "String"/>
+</bean> 
+
+<bean id = "LastName" class = "com.employee.Employee">
+<constructor-arg value = "lastName"/>
+</bean>  
+  
+<bean id = "nameLastName" class = "com.employee.Employee">
+<constructor-arg value = "varad123" type = "String"/>
+<constructor-arg value = "patil" type = "String"/>
+</bean> 
+
+<bean id = "address" class = "com.employeeAddress.Address">
+<constructor-arg value = "morave" type = "String"/>
+<constructor-arg value = "panvel" type = "String"/>
+<constructor-arg value = "maharashtra" type = "String"/>
+</bean>    
+
+<bean id = "employeeAddress" class = "com.employeeAddress.EmployeWithAddress">
+<constructor-arg value = "vad" type = "String"/>
+<constructor-arg value = "patil" type = "String"/>
+<constructor-arg> <ref bean = "address"/></constructor-arg>
+</bean>   
+ 
+ <bean id = "employeList" class = "com.ciWithCollection.EmployeList">
+ <constructor-arg value = "hanu" type = "String"/>
+ <constructor-arg value = "dalvi" type = "String"/>
+ <constructor-arg>
+ <set>
+ <value>hii</value>
+ <value>ggg</value>
+ <value>dddhhhdhd</value>
+ <value>hii</value>
+ </set>
+ </constructor-arg>
+ </bean> 
+ <bean id = "employeSet" class = "com.ciWithCollection.EmployeSetList">
+ <constructor-arg value = "hhh" type = "String"/>
+ <constructor-arg value = "patil" type = "String"/>
+ <constructor-arg>
+ <list>
+ <value>dddhh</value>
+ <value>hhh</value>
+ </list>
+ </constructor-arg>
+ </bean>
+ <bean id = "address1" class = "com.ciWithCollection2.Address">
+ <constructor-arg value = "pan" type = "String"/>
+ <constructor-arg value = "mah" type = "String"/>
+ <constructor-arg value = "12" type = "String"/>
+ </bean>
+ 
+ <bean id = "address2" class = "com.ciWithCollection2.Address">
+ <constructor-arg value = "pan1" type = "String"/>
+ <constructor-arg value = "mah1" type = "String"/>
+ <constructor-arg value = "121" type = "String"/>
+ </bean>
+ 
+ <bean id = "employeWithCol" class = "com.ciWithCollection2.Employe">
+ <constructor-arg value = "vad" type = "String"/>
+ <constructor-arg>
+ <list>
+ <ref bean = "address1"/>
+ <ref bean = "address2"/>
+ </list>
+ </constructor-arg>
+ </bean>
+ 
+ <bean id = "siEmploye" class = "com.siWith.Employe">
+ <property name="name" value ="varad"/>
+ <property name="lastName" value = "patil"/>
+ <property name="id">
+ <value>125`</value>
+ </property>
+ </bean>
+ 
+ <bean id = "addressSi1" class = " com.siWithConst.Address">
+ <property name = "village" value = "morave" />
+ <property name="city"  value = "panvel"></property>
+ </bean>
+ 
+ 
+ <bean id = "addressSi2" class = " com.siWithConst.Address">
+ <property name = "village" value = "morave1" />
+ <property name="city"  value = "panvel1"></property>
+ </bean>
+ 
+ <bean id = "emplSi" class = "com.siWithConst.Employe">
+ <property name="name" value = "vad"/>
+ <property name="lastName" value = "patil"/>
+ <property name="address">
+ <list>
+ <ref bean = "addressSi1"/>
+ <ref bean = "addressSi2"/>
+ </list>
+ </property>
+ 
+<!--  autowire beans -->
+ </bean>
+ <bean id = "classA" class = "com.autowire.ClassA"></bean>
+ <bean id = "classB" class = "com.autowire.ClassB" autowire= "byName" ></bean>
+ 
+ <bean id="opBean" class="com.aopExample.Opeartion">   </bean>  
+ <bean id="trackMyBean" class="com.aopExample.TrackOperation"></bean>  
+      
+ <bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator"></bean>  
+ 
+ 
+ <!-- transaction management beans -->
+ 
+ <!-- Enable Annotation based Declarative Transaction Management -->
+	<tx:annotation-driven proxy-target-class = "true" transaction-manager = "transactionManager" />
+		
+
+	<!-- Creating TransactionManager Bean, since JDBC we are creating of type 
+		DataSourceTransactionManager -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- MySQL DB DataSource -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/varad" />
+		<property name="username" value="root" />
+		<property name="password" value="admin123" />
+	</bean>
+
+	<bean id="customerDAO" class="com.transactionManagement.CustomerDAOImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<bean id="customerManager" class="com.transactionManagement.CustomerManagerImpl">
+		<property name="customerDAO" ref="customerDAO"></property>
+	</bean>
+ 
+</beans> 
+
+ 
